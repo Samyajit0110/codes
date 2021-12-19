@@ -5,20 +5,22 @@
 struct node
 {
     struct node *next;
-    char name[100];
+    int data;
+    // char name[100];
 } * head, *tail, *previousNode, *nextNode, *tempNode;
-void addNameInNode(struct node *n, char string[])
-{
-    for (int i = 0; i < strlen(string); i++)
-    {
-        n->name[i] = string[i];
-    }
-}
+// void addNameInNode(struct node *n, char string[])
+// {
+//     for (int i = 0; i < strlen(string); i++)
+//     {
+//         n->name[i] = string[i];
+//     }
+// }
 
-void createNode(char nameOfStudent[])
+void createNode(int element)
 {
     struct node *newNode = malloc(sizeof(struct node));
-    addNameInNode(newNode, nameOfStudent);
+    // addNameInNode(newNode, nameOfStudent);
+    newNode->data = element;
     newNode->next = NULL;
     if (head == NULL)
     {
@@ -34,37 +36,10 @@ void createNode(char nameOfStudent[])
 
 void insertInList(int position)
 {
-    struct node *newNode = malloc(sizeof(struct node));
-    tempNode = head;
-    addNameInNode(newNode, "test "); // test values
-    int counter = 1;
-    if (position == 1) // insertion at head
-    {
-        newNode->next = head;
-        head = newNode;
-    }
-    if (position == LIMIT) // insertion at tail
-    {
-        createNode("test ");
-    }
-    else // insertion at the middle
-    {
-        while (tempNode != NULL)
-        {
-            if (counter == position - 1)
-            {
-                previousNode = tempNode;
-                nextNode = tempNode->next;
-                previousNode->next = newNode;
-                newNode->next = nextNode;
-                return;
-            }
-            counter++;
-            tempNode = tempNode->next;
-        }
-    }
-}
+    struct node *temp = malloc(sizeof(struct node));
+    //insert at head
 
+}
 void deleteInList(int position)
 {
     int counter = 1;
@@ -76,7 +51,7 @@ void deleteInList(int position)
             tempNode = previousNode->next;
             nextNode = tempNode->next;
             previousNode->next = nextNode;
-            printf("element deleted : %s\n", tempNode->name);
+            printf("element deleted : %d\n", tempNode->data);
             free(tempNode);
             return;
         }
@@ -90,14 +65,15 @@ void selectInList(int position)
     int counter = 1;
 }
 
-void update(int position, char newEntry[])
+void update(int position, int newEntry)
 {
     int counter = 1;
     if (counter == position - 1)
     {
-        printf("updated entry from %s\n", tempNode->name);
-        addNameInNode(tempNode, newEntry);
-        printf("to %s\n", tempNode->name);
+        printf("updated entry from %d\n", tempNode->data);
+        // addNameInNode(tempNode, newEntry);
+        tempNode->data  = 3000;
+        printf("to %d\n", tempNode->data);
         return;
     }
     tempNode = tempNode->next;
@@ -108,7 +84,7 @@ void printList(struct node *n)
 {
     while (n != NULL)
     {
-        printf("%s\n", n->name);
+        printf("%d\n", n->data);
         n = n->next;
     }
 }
@@ -126,3 +102,5 @@ void main()
     // update(4,getName);
     // printList(head);
 }
+
+
