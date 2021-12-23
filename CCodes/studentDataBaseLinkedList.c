@@ -24,34 +24,41 @@ void createNode(int element)
         tail = newNode;
     }
 }
-void insertInList(int position,int element)
+void insertInList(int position, int element)
 {
-    struct node *temp = malloc(sizeof(struct node));
-    //insert at head
-    //insert at middle
-    int i = 1;
-    tempNode = NULL;
+    int index = 1;
     tempNode = malloc(sizeof(struct node));
-    previousNode = head;
-    temp->data = element;
-    while (i < position - 1)
+    tempNode->data = element;
+    tempNode->next = NULL;
+    if (position == 0 || position == 1) // insertion at head
     {
-        previousNode = previousNode->next;
-        i++;
+        tempNode->next = head;
+        head = tempNode;
     }
-    nextNode = previousNode->next;
-    tempNode->next = nextNode;
-    previousNode->next = tempNode;
-
+    else
+    {
+        previousNode = head;
+        while (index < position-1) // till previous node
+        {
+            index++;
+            previousNode = previousNode->next;
+        }
+        nextNode = previousNode->next;
+        previousNode -> next = tempNode;
+        tempNode -> next = nextNode;
+    }
 }
 void deleteNode(struct node **headRef, int key)
-{   tempNode = head; 
-    if (tempNode != NULL && tempNode->data == key) {
-        *headRef = tempNode->next; 
-        free(tempNode); 
+{
+    tempNode = head;
+    if (tempNode != NULL && tempNode->data == key)
+    {
+        *headRef = tempNode->next;
+        free(tempNode);
         return;
     }
-    while (tempNode != NULL && tempNode->data != key) {
+    while (tempNode != NULL && tempNode->data != key)
+    {
         previousNode = tempNode;
         tempNode = tempNode->next;
     }
@@ -72,7 +79,7 @@ void update(int position, int newEntry)
     {
         printf("updated entry from %d\n", tempNode->data);
         // addNameInNode(tempNode, newEntry);
-        tempNode->data  = 3000;
+        tempNode->data = 3000;
         printf("to %d\n", tempNode->data);
         return;
     }
@@ -90,4 +97,17 @@ void printList(struct node *n)
 }
 void main()
 {
+    head = malloc(sizeof(struct node));
+    struct node *first = NULL; // test list
+    struct node *second = NULL;
+    first = malloc(sizeof(struct node));
+    second = malloc(sizeof(struct node));
+    head->data = 1;
+    first->data = 2;
+    second->data = 3;
+    head->next = first;
+    first->next = second;
+    second->next = NULL;
+    insertInList(2, 4);
+    printList(head);
 }
