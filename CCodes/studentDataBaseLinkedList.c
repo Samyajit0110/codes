@@ -6,16 +6,7 @@ struct node
 {
     struct node *next;
     int data;
-    // char name[100];
 } * head, *tail, *previousNode, *nextNode, *tempNode;
-// void addNameInNode(struct node *n, char string[])
-// {
-//     for (int i = 0; i < strlen(string); i++)
-//     {
-//         n->name[i] = string[i];
-//     }
-// }
-
 void createNode(int element)
 {
     struct node *newNode = malloc(sizeof(struct node));
@@ -33,33 +24,42 @@ void createNode(int element)
         tail = newNode;
     }
 }
-
-void insertInList(int position)
+void insertInList(int position,int element)
 {
     struct node *temp = malloc(sizeof(struct node));
     //insert at head
+    //insert at middle
+    int i = 1;
+    tempNode = NULL;
+    tempNode = malloc(sizeof(struct node));
+    previousNode = head;
+    temp->data = element;
+    while (i < position - 1)
+    {
+        previousNode = previousNode->next;
+        i++;
+    }
+    nextNode = previousNode->next;
+    tempNode->next = nextNode;
+    previousNode->next = tempNode;
 
 }
-void deleteInList(int position)
-{
-    int counter = 1;
-    while (tempNode != NULL)
-    {
-        if (counter = position - 1)
-        {
-            previousNode = tempNode;
-            tempNode = previousNode->next;
-            nextNode = tempNode->next;
-            previousNode->next = nextNode;
-            printf("element deleted : %d\n", tempNode->data);
-            free(tempNode);
-            return;
-        }
-        counter++;
+void deleteNode(struct node **headRef, int key)
+{   tempNode = head; 
+    if (tempNode != NULL && tempNode->data == key) {
+        *headRef = tempNode->next; 
+        free(tempNode); 
+        return;
+    }
+    while (tempNode != NULL && tempNode->data != key) {
+        previousNode = tempNode;
         tempNode = tempNode->next;
     }
+    if (tempNode == NULL)
+        return;
+    previousNode->next = tempNode->next;
+    free(tempNode);
 }
-
 void selectInList(int position)
 {
     int counter = 1;
@@ -88,19 +88,6 @@ void printList(struct node *n)
         n = n->next;
     }
 }
-
 void main()
 {
-    // char getName[10] = "ezyy gege\0";
-    // createNode(getName);
-    // char getName2[10] = "nexts";
-    // createNode(getName2);
-    // char getName3[10] = "da what";
-    // createNode(getName3);
-    // insertInList(4);
-    // deleteInList(2);
-    // update(4,getName);
-    // printList(head);
 }
-
-
