@@ -1,19 +1,21 @@
 #include <stdio.h>
 void main()
 {
-    int line;
-    scanf("%d", &line);
-    int i = line;
-    int j = 0;
-    while(i >= 1)
+    int n;
+    printf("Enter a number\n");
+    scanf("%d",&n);
+    int i, j, space = n - 1, spCount = n - 1;
+    for (i = 1; i <= n; i++)
     {
-        j = line;
-        while(j >= i)
+        for (space = spCount; space > 0; space--)
+        {
+            printf(" ");
+        }
+        spCount--;
+        for (j = 1; j <= i; j++)
         {
             printf("%d", j);
-            --j;
         }
         printf("\n");
-        i--;
     }
 }

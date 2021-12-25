@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define LIMIT 4
+
 struct node
 {
     struct node *next;
@@ -9,8 +9,7 @@ struct node
 } * head, *tail, *previousNode, *nextNode, *tempNode;
 void createNode(int element)
 {
-    struct node *newNode = malloc(sizeof(struct node));
-    // addNameInNode(newNode, nameOfStudent);
+    struct node *newNode = (struct node *)malloc(sizeof(struct node));
     newNode->data = element;
     newNode->next = NULL;
     if (head == NULL)
@@ -20,10 +19,12 @@ void createNode(int element)
     }
     else
     {
+
         tail->next = newNode;
         tail = newNode;
     }
 }
+
 void insertInList(int position, int element)
 {
     int index = 1;
@@ -38,23 +39,25 @@ void insertInList(int position, int element)
     else
     {
         previousNode = head;
-        while (index < position-1) // till previous node
+        while (index < position - 1) // till previous node
         {
             index++;
             previousNode = previousNode->next;
         }
         nextNode = previousNode->next;
-        previousNode -> next = tempNode;
-        tempNode -> next = nextNode;
+        previousNode->next = tempNode;
+        tempNode->next = nextNode;
     }
 }
-void deleteNode(struct node **headRef, int key)
+
+void deleteNode(struct node **head_ref, int key)
 {
-    tempNode = head;
+    struct node *tempNode = *head_ref;
+
     if (tempNode != NULL && tempNode->data == key)
     {
-        *headRef = tempNode->next;
-        free(tempNode);
+        *head_ref = tempNode->next; // Changed head
+        free(tempNode);             // free old head
         return;
     }
     while (tempNode != NULL && tempNode->data != key)
@@ -62,52 +65,99 @@ void deleteNode(struct node **headRef, int key)
         previousNode = tempNode;
         tempNode = tempNode->next;
     }
-    if (tempNode == NULL)
-        return;
-    previousNode->next = tempNode->next;
-    free(tempNode);
-}
-void selectInList(int position)
-{
-    int counter = 1;
-}
 
-void update(int position, int newEntry)
-{
-    int counter = 1;
-    if (counter == position - 1)
+    if (tempNode == NULL)
     {
-        printf("updated entry from %d\n", tempNode->data);
-        // addNameInNode(tempNode, newEntry);
-        tempNode->data = 3000;
-        printf("to %d\n", tempNode->data);
+        printf("Desired key not found\n");
         return;
     }
-    tempNode = tempNode->next;
-    counter++;
+    previousNode->next = tempNode->next;
+    free(tempNode); // Free memory
+}
+
+// void selectInList(int position)
+// {
+//     int counter = 1;
+// }
+
+void update(int key, int newEntry)
+{
+    int index;
+    tempNode = head;
+    while (tempNode != NULL)
+    {
+        if (tempNode->data != key)
+        {
+            tempNode = tempNode->next;
+        }
+        else
+        {
+            tempNode->data = newEntry;
+            printf("Updated value to %d\n", newEntry);
+            return;
+        }
+    }
+    printf("Desired value not found\n");
+    return;
 }
 
 void printList(struct node *n)
 {
     while (n != NULL)
     {
-        printf("%d\n", n->data);
+        printf("%d\t", n->data);
         n = n->next;
     }
+    printf("\n");
 }
 void main()
 {
-    head = malloc(sizeof(struct node));
-    struct node *first = NULL; // test list
-    struct node *second = NULL;
-    first = malloc(sizeof(struct node));
-    second = malloc(sizeof(struct node));
-    head->data = 1;
-    first->data = 2;
-    second->data = 3;
-    head->next = first;
-    first->next = second;
-    second->next = NULL;
-    insertInList(2, 4);
-    printList(head);
+    // head = malloc(sizeof(struct node));
+    int choice;
+    int positon, newElement, key, length;
+    do
+    {
+        printf("Enter choice\n\n");
+        printf("0   create a new list\n1   insert\n2   delete\n3   update\n4   display\n5  exit\n");
+        scanf("%d", &choice);
+        printf("\n\n");
+        switch (choice)
+        {
+        case 0:
+            printf("Enter no of elements in the list\n");
+            scanf("%d", &length);
+            printf("keep entering elements\n");
+            while (length > 0)
+            {
+                scanf("%d", &newElement);
+                createNode(newElement);
+                length--;
+            }
+            break;
+        case 1:
+            printf("Enter position and data\n");
+            scanf("%d%d", &positon, &newElement);
+            insertInList(positon, newElement);
+            break;
+        case 2:
+            printf("Enter key to be deleted\n");
+            scanf("%d", &key);
+            deleteNode(&head, key);
+            break;
+        case 3:
+            printf("Enter data to be updated and new entry");
+            scanf("%d%d", &key, &newElement);
+            update(key, newElement);
+            break;
+        case 4:
+            printList(head);
+            break;
+        case 5:
+            printf("bye bye!!");
+            break;
+        default:
+            printf("Invalid input");
+            break;
+        }
+    } while (choice != 5);
 }
