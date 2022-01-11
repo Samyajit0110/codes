@@ -1,1 +1,1 @@
-for (; space > 0; space--)
+printf("Prints name\n");
