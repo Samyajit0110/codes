@@ -16,7 +16,7 @@ int min(int a, int b)
 void main()
 {
     printf("enter size of array\n");
-    int size = 0;
+    static int const size = 0; //static lvalue
     scanf("%d",&size);
     int container[size];
     int i = 0;
