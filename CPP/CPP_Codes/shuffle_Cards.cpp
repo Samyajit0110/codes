@@ -3,7 +3,7 @@
 #include <ctime>
 
 using namespace std;
-
+ 
 class cards
 {
 private:
