@@ -5,6 +5,7 @@ struct node
     int data;
     struct node *next;
 } * head, *tail;
+
 void addNode(int element)
 {
     struct node *newNode = (struct node *)malloc(sizeof(struct node));
@@ -15,7 +16,7 @@ void addNode(int element)
     newNode->next = NULL;
 
     //Checks if the list is empty
-    if (head == NULL && tail == NULL)
+    if (head == NULL)
     {
         //If list is empty, both head and tail will point to new node
         tail = newNode;

@@ -3,7 +3,7 @@ void main()
 {
     int n;
     printf("Enter a number\n");
-    scanf("%d",&n);
+    scanf("%d", &n);
     int i, j, space = n - 1, spCount = n - 1;
     for (i = 1; i <= n; i++)
     {
