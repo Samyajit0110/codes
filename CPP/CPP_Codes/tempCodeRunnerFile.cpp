@@ -1,1 +1,1 @@
- cout<<ggwp;
+newNode->data = data;

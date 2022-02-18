@@ -1,47 +1,84 @@
+
 #include <iostream>
 using namespace std;
-void swap(int *x, int *y)
-{
-	int temp;
-	temp = *x;
-	*x = *y;
-	*y = temp;
-}
 
-void bubblesort(int arr[], int n)
+class Node
 {
-	int i, j;
-	for (i = 0; i < n - 1; i++)
+public:
+	int data;
+	Node *prev;
+	Node *next;
+	Node()
 	{
-		for (j = 0; j < n - i - 1; j++)
+		int data = 0;
+		prev = next = NULL;
+	}
+	Node(int data)
+	{
+		this->data = data;
+		this->prev = this->next = NULL;
+	}
+} * head;
+
+void delete_node(int key)
+{
+	Node *temp;
+	temp = head;
+	while (temp->data != key && temp != NULL)
+	{
+		temp = temp->next;
+	}
+	if (temp == NULL)
+	{
+		cout << "Deletion key not found" << endl;
+	}
+	else
+	{
+		Node *Previous, *Next;
+		if (temp->next != NULL && temp->prev != NULL)
 		{
-			if (arr[j] > arr[j + 1])
-				swap(&arr[j], &arr[j + 1]);
+			Previous = temp->prev;
+			Next = temp->next;
+			Previous->next = Next;
+			Next->prev = Previous;
 		}
+		if (temp->next == NULL)
+		{
+			Previous = temp->prev;
+			Previous->next = NULL;
+		}
+		if (temp->prev == NULL)
+		{
+			Next = temp->next;
+			Next->prev = NULL;
+			head = Next;
+		}
+		cout << "Node deleted " << temp->data << endl;
+		delete (temp);
 	}
 }
 
-void display(int arr[], int size)
-{
-	for (int i = 0; i < size; i++)
-	{
-		cout << arr[i] << " ";
-	}
-	cout << endl;
-}
 int main()
 {
-	int arr[100];
-	int l;
-	cout << "Enter the number of elements:";
-	cin >> l;
-	for (int i = 0; i < l; i++)
+	head = new Node();
+	Node *first = new Node();
+	Node *second = new Node();
+	head->data = 1;
+	first->data = 2;
+	second->data = 3;
+	head->prev = NULL;
+	first->prev = head;
+	second->prev = first;
+	head->next = first;
+	first->next = second;
+	second->next = NULL;
+	Node *temp;
+	delete_node(1);
+	temp = head;
+	while (temp != NULL)
 	{
-		cin >> arr[i];
+		cout << temp->data << endl;
+		temp = temp->next;
 	}
-	// int n = sizeof(arr) / sizeof(arr[0]);
-	int n = 6;
-	bubblesort(arr, n);
-	cout << "Sorted array:";
-	display(arr, n);
+	return 0;
 }
