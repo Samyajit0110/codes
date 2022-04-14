@@ -1,35 +1,96 @@
 #include <stdio.h>
-int queue[5];
-int length = 5, front = -1, rear = -1;
-void enqueue()
+#include <stdlib.h>
+
+struct queue
 {
-    int element;
-    if ((rear + 1) % length == front) // condition to check queue is full
+    int size;
+    int f;
+    int r;
+    int *arr;
+};
+
+int isEmpty(struct queue *q)
+{
+    if (q->r == q->f)
     {
-        printf("Queue is overflow..");
-        return;
+        return 1;
     }
-    printf("Enter element");
-    scanf("%d", &element);
-    if (front == -1 && rear == -1) // condition to check queue is empty
+    return 0;
+}
+
+int isFull(struct queue *q)
+{
+    if (q->r == q->size - 1)
     {
-        front = 0;
-        rear = 0;
-        queue[rear] = element;
+        return 1;
+    }
+    return 0;
+}
+
+void enqueue(struct queue *q, int val)
+{
+    if (isFull(q))
+    {
+        printf("This Queue is full\n");
     }
     else
     {
-        rear = (rear + 1) % length;
-        queue[rear] = element;
+        q->r++;
+        q->arr[q->r] = val;
+        // printf("Enqued element: %d\n", val);
     }
 }
-void dequeue()
+
+int dequeue(struct queue *q)
 {
-    int popped;
-    
+    int a = -1;
+    if (isEmpty(q))
+    {
+        printf("This Queue is empty\n");
+    }
+    else
+    {
+        q->f++;
+        a = q->arr[q->f];
+    }
+    return a;
 }
-void main()
+
+int main()
 {
-    enqueue();
-    enqueue();
+    // Initializing Queue (Array Implementation)
+    struct queue q;
+    q.size = 400;
+    q.f = q.r = 0;
+    q.arr = (int *)malloc(q.size * sizeof(int));
+
+    // BFS Implementation
+    int node;
+    int i = 1;
+    int visited[7] = {0, 0, 0, 0, 0, 0, 0};
+    int a[7][7] = {
+        {0, 1, 1, 1, 0, 0, 0},
+        {1, 0, 1, 0, 0, 0, 0},
+        {1, 1, 0, 1, 1, 0, 0},
+        {1, 0, 1, 0, 1, 0, 0},
+        {0, 0, 1, 1, 0, 1, 1},
+        {0, 0, 0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 1, 0, 0}};
+    printf("%d", i);
+    visited[i] = 1;
+    enqueue(&q, i); // Enqueue i for exploration
+    while (!isEmpty(&q))
+    {
+        int node = dequeue(&q);
+        for (int j = 0; j < 7; j++)
+        {
+            if (a[node][j] == 1 && visited[j] == 0)
+            {
+                printf("%d", j);
+                visited[j] = 1;
+                enqueue(&q, j);
+            }
+        }
+    }
+    return 0;
 }
