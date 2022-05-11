@@ -1,84 +1,73 @@
-
 #include <iostream>
+#include <vector>
 using namespace std;
 
-class Node
-{
-public:
-	int data;
-	Node *prev;
-	Node *next;
-	Node()
-	{
-		int data = 0;
-		prev = next = NULL;
-	}
-	Node(int data)
-	{
-		this->data = data;
-		this->prev = this->next = NULL;
-	}
-} * head;
+#define V 6 // No of vertices
 
-void delete_node(int key)
+int selectMinVertex(vector<int> &value, vector<bool> &processed)
 {
-	Node *temp;
-	temp = head;
-	while (temp->data != key && temp != NULL)
+	int minimum = INT_MAX;
+	int vertex;
+	for (int i = 0; i < V; ++i)
 	{
-		temp = temp->next;
+		if (processed[i] == false && value[i] < minimum)
+		{
+			vertex = i;
+			minimum = value[i];
+		}
 	}
-	if (temp == NULL)
+	return vertex;
+}
+
+void dijkstra(int graph[V][V])
+{
+	int parent[V];					  // Stores Shortest Path Structure
+	vector<int> value(V, INT_MAX);	  // Keeps shortest path values to each vertex from source
+	vector<bool> processed(V, false); // TRUE->Vertex is processed
+
+	// Assuming start point as Node-0
+	parent[0] = -1; // Start node has no parent
+	value[0] = 0;	// start node has value=0 to get picked 1st
+
+	// Include (V-1) edges to cover all V-vertices
+	for (int i = 0; i < V - 1; ++i)
 	{
-		cout << "Deletion key not found" << endl;
+		// Select best Vertex by applying greedy method
+		int U = selectMinVertex(value, processed);
+		processed[U] = true; // Include new Vertex in shortest Path Graph
+
+		// Relax adjacent vertices (not yet included in shortest path graph)
+		for (int j = 0; j < V; ++j)
+		{
+			/* 3 conditions to relax:-
+				  1.Edge is present from U to j.
+				  2.Vertex j is not included in shortest path graph
+				  3.Edge weight is smaller than current edge weight
+			*/
+			if (graph[U][j] != 0 && processed[j] == false && value[U] != INT_MAX && (value[U] + graph[U][j] < value[j]))
+			{
+				value[j] = value[U] + graph[U][j];
+				parent[j] = U;
+			}
+		}
 	}
-	else
-	{
-		Node *Previous, *Next;
-		if (temp->next != NULL && temp->prev != NULL)
-		{
-			Previous = temp->prev;
-			Next = temp->next;
-			Previous->next = Next;
-			Next->prev = Previous;
-		}
-		if (temp->next == NULL)
-		{
-			Previous = temp->prev;
-			Previous->next = NULL;
-		}
-		if (temp->prev == NULL)
-		{
-			Next = temp->next;
-			Next->prev = NULL;
-			head = Next;
-		}
-		cout << "Node deleted " << temp->data << endl;
-		delete (temp);
-	}
+	// Print Shortest Path Graph
+	for (int i = 1; i < V; ++i)
+		cout << "U->V: " << parent[i] << "->" << i << "  wt = " << graph[parent[i]][i] << "\n";
 }
 
 int main()
 {
-	head = new Node();
-	Node *first = new Node();
-	Node *second = new Node();
-	head->data = 1;
-	first->data = 2;
-	second->data = 3;
-	head->prev = NULL;
-	first->prev = head;
-	second->prev = first;
-	head->next = first;
-	first->next = second;
-	second->next = NULL;
-	Node *temp;
-	delete_node(1);
-	temp = head;
-	while (temp != NULL)
-	{
-		cout << temp->data << endl;
-		temp = temp->next;
-	}
+	int graph[V][V] = {{0, 1, 4, 0, 0, 0},
+					   {1, 0, 4, 2, 7, 0},
+					   {4, 4, 0, 3, 5, 0},
+					   {0, 2, 3, 0, 4, 6},
+					   {0, 7, 5, 4, 0, 7},
+					   {0, 0, 0, 6, 7, 0}};
+
+	dijkstra(graph);
 	return 0;
 }
+
+// TIME COMPLEXITY: O(V^2)
+// TIME COMPLEXITY: (using Min-Heap + Adjacency_List): O(ElogV)
