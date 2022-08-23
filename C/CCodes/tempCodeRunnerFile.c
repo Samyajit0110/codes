@@ -1,1 +1,0 @@
-printf("Prints name\n");

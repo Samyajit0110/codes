@@ -45,7 +45,7 @@ void prims(int graph[VERTICES][VERTICES])
     // making the first node the root of mst
     parent[0] = -1;
     // running the loop for all vertices or V-1 edges
-    for (int i = 1; i < VERTICES; i++)
+    for (int i = 1; i < VERTICES; i++)// because we need (vertices - 1 edges)
     {
         int u = min_key_index(keys, in_MST);
         in_MST[u] = true;

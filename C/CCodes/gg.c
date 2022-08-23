@@ -1,13 +1,23 @@
 #include <stdio.h>
+#include <stdlib.h>
 void main()
 {
-  int length = 0, getInput;
-  int array[50];
-  for (int i = 0; i < 50; i++)
+  int array[25];
+  int i, key;
+  printf("Enter elements\n");
+  for (i = 0; i < 25; i++)
   {
-    printf("get input\n");
-    scanf("%d", &getInput);
-    if (getInput == 0)
-      break;
+    scanf("%d", &array[i]);
   }
+  printf("Enter the element to be searched\n");
+  scanf("%d", &key);
+  for (i = 0; i < 25; i++)
+  {
+    if (key == array[i])
+    {
+      printf("Element found\n");
+      exit(0);
+    }
+  }
+  printf("Element not found\n");
 }

@@ -7,8 +7,8 @@ from sklearn import datasets, linear_model
 from sklearn.metrics import mean_squared_error
 
 diabetes = datasets.load_diabetes()
-# diabetes_X = diabetes.data[:, np.newaxis, 2]
-diabetes_X = diabetes.data
+diabetes_X = diabetes.data[:, np.newaxis, 2]
+# diabetes_X = diabetes.data
 
 diabetes_X_train = diabetes_X[:-30]
 diabetes_X_test = diabetes_X[-30:]
@@ -28,10 +28,10 @@ print("Mean squared error is: ", mean_squared_error(
 print("Weights: ", model.coef_)
 print("Intercept: ", model.intercept_)
 
-# plt.scatter(diabetes_X_test, diabetes_y_test)
-# plt.plot(diabetes_X_test, diabetes_y_predicted)
+plt.scatter(diabetes_X_test, diabetes_y_test)
+plt.plot(diabetes_X_test, diabetes_y_predicted)
 
-# plt.show()
+plt.show()
 
 # Mean squared error is:  3035.0601152912695
 # Weights:  [941.43097333]
