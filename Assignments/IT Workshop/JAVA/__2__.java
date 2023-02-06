@@ -1,18 +1,15 @@
 class __2__ {
 
+  __2__() {
+    System.out.println("This is the default constructor");
+  }
+
+  __2__(int n) {
+    System.out.println("This is from parameterized constructor: parameter : " + n);
+  }
+
   public static void main(String args[]) {
-    int array[][] = new int[4][4];
-    int i, j;
-    for (i = 0; i < 4; i++) {
-      for (j = 0; j < 4; j++) {
-        array[i][j] = i * j;
-      }
-    }
-    for (i = 0; i < 4; i++) {
-      for (j = 0; j < 4; j++) {
-        System.out.print(array[i][j] + " ");
-      }
-      System.out.println("");
-    }
+    __2__ obj = new __2__();
+    __2__ obj2 = new __2__(8);
   }
 }

@@ -1,10 +1,14 @@
-import java.util.Scanner;
-
 class __9__ {
 
+  static int variable = 10;
+
+  void method() {
+    int variable = 20;
+    System.out.println(this.variable);
+  }
+
   public static void main(String args[]) {
-    Scanner sc = new Scanner(System.in);
-    int input = sc.nextInt();
-    System.out.println("Input : "+input);
+    __9__ object = new __9__();
+    object.method();
   }
 }

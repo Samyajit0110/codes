@@ -3,7 +3,7 @@
 #define MAX 50
 
 void push();
-void pop ();
+void pop();
 void display();
 int queue_array[MAX];
 int rear = -1;
@@ -25,7 +25,7 @@ void main()
             push();
             break;
         case 2:
-            pop ();
+            pop();
             break;
         case 3:
             display();
@@ -35,7 +35,8 @@ void main()
         default:
             printf("Wrong choice \n");
         } /* End of switch */
-    }     /* End of while */
+        printf("Front  = %d and rear = %d\n", front, rear);
+    } /* End of while */
 } /* End of main() */
 
 void push()
@@ -55,7 +56,7 @@ void push()
     }
 } /* End of push() */
 
-void pop ()
+void pop()
 {
     if (front == -1 || front > rear)
     {

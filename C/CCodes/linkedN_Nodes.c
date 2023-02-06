@@ -1,49 +1,96 @@
 #include <stdio.h>
 #include <stdlib.h>
-struct node
+typedef struct node
 {
     int data;
     struct node *next;
-} * head, *tail;
+}node;
 
-void addNode(int element)
+struct node *head;
+struct node *tail;
+
+void addNode(int data)
 {
-    struct node *newNode = (struct node *)malloc(sizeof(struct node));
-    head = NULL; //(struct node *)malloc(sizeof(struct node));
-    tail = NULL;
-    //tail=head;
-    newNode->data = element;
-    newNode->next = NULL;
-
-    //Checks if the list is empty
+    node *temp;
+    temp = (node *)malloc(sizeof(node));
     if (head == NULL)
     {
-        //If list is empty, both head and tail will point to new node
-        tail = newNode;
-        head = newNode;
+        temp->data = data;
+        temp->next = temp;
+        head = temp;
     }
     else
     {
-        //newNode will be added after tail such that tail's next will point to newNode
-        tail->next = newNode;
-        //newNode will become new tail of the list
-        tail = newNode;
+        temp->data = data;
+        temp->next = head->next;
+        head->next = temp;
+        head = temp;
     }
 }
-void printList(struct node *n)
+
+void addBeginning(int data)
 {
-    while (n != NULL)
+    struct node *temp;
+    temp = (struct node *)malloc(sizeof(struct node));
+    if (head == NULL)
     {
-        printf("The data in node  %d(data)\n", n->data);
-        n = n->next;
+        temp->data = data;
+        temp->next = temp;
+        head = temp;
+    }
+    else
+    {
+        temp->data = data;
+        temp->next = head->next;
+        head->next = temp;
     }
 }
+
+void display()
+{
+    if (head == NULL)
+        printf("list is underflow\n");
+    else
+    {
+        struct node *temp;
+        temp = head->next;
+
+        // While first node is not
+        // reached again, print,
+        // since the list is circular
+        do
+        {
+            printf("%d ", temp->data);
+            temp = temp->next;
+        } while (temp != head->next);
+        printf("\n");
+    }
+}
+
 void main()
 {
-    for (int i = 1; i <= 20; i++)
+    int choice, data;
+    do
     {
-        addNode(i);
-    }
-    printList(head);
-    printf("%x\n%x",head->next, tail->next);
+        printf("Enter choice\n");
+        printf("0 for insertion at end\n1 for at the beginning\n2 display\n");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 0:
+            printf("Enter element\n");
+            scanf("%d", &data);
+            addNode(data);
+            break;
+        case 1:
+            printf("Enter element\n");
+            scanf("%d", &data);
+            addBeginning(data);
+            break;
+        case 2:
+            display();
+        default:
+            break;
+        }
+    } while (choice!=3);
 }

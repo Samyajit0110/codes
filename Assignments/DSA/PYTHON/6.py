@@ -1,5 +1,5 @@
-new_list = ["", "gg", "hueueueeu", ""]
-while "" in new_list:
-    new_list.remove("")
-for i in new_list:
-    print(i," ")
+prices = {"bread": 30, "egg": 35, "butter": 65, "milk": 25}
+
+for item in prices:
+    print (item + ":")
+    print ("price: " + str(prices[item]))

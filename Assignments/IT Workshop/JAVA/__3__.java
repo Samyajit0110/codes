@@ -1,13 +1,16 @@
 class __3__ {
 
+  void method_1() {
+    System.out.println("heyo");
+  }
+
+  void method_2() {
+    this.method_1();//same as method_1()
+    System.out.println("heyo from method 2");
+  }
+
   public static void main(String args[]) {
-    int array[] = { 1, 2, 3, 9, 8, 7, 4, 5, 6, 7, 6, 0 };
-    int i, sum = 0;
-    for (i = 0; i < 12; i++) {
-      if (array[i] % 2 == 0) {
-        sum += array[i];
-      }
-    }
-    System.out.println("Sum: " + sum);
+    __3__ obj = new __3__();
+    obj.method_2();
   }
 }

@@ -3,7 +3,7 @@
 #define CAP 10
 void main()
 {
-    int cap = CAP;
+    int cap = CAP;   
     int array[CAP] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int to_be_deleted;
     printf("Enter position of element to be deleted\n");

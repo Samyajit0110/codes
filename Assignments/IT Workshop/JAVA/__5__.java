@@ -1,11 +1,15 @@
 class __5__ {
 
-  __5__(int a, int b) {
-    int product = a * b;
-    System.out.println("Product: "+product);
+  void method_1(__5__ object) {
+    System.out.println("Method invoked");
+  }
+
+  void method_2() {
+    method_1(this);
   }
 
   public static void main(String args[]) {
-    __5__ object = new __5__(10,20);
+    __5__ obj =  new __5__();
+    obj.method_2();
   }
 }
